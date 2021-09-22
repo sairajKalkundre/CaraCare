@@ -14,10 +14,8 @@ This is a simple water tracker app.
 
 
 ## Screenshots
-![1](https://github.com/sairajKalkundre/CaraCare/blob/master/screenshots/caraCare1.jpg width=100)
+![1](https://github.com/sairajKalkundre/CaraCare/blob/master/screenshots/caraCare1.jpg)
 ![2](https://github.com/sairajKalkundre/CaraCare/blob/master/screenshots/caraCare2.jpg)
-![3](https://github.com/sairajKalkundre/CaraCare/blob/master/screenshots/caraCare3.jpg)
-![3](https://github.com/sairajKalkundre/CaraCare/blob/master/screenshots/caraCare3.jpg)
 
 
 
