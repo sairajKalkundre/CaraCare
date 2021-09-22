@@ -8,12 +8,13 @@
  * @format
  */
 import React from "react";
-import { Image, Text, Touchable, TouchableOpacity, View } from "react-native";
+import { Image, StatusBar, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import {BallIcon,AddIcon} from './src/utils/icon';
 
 const App = () => {
   return (
     <View style = {{flex : 1  , backgroundColor : 'rgb(69,188,237)',alignItems : 'center',justifyContent : 'center'}}>
+      <StatusBar backgroundColor = 'rgb(69,188,237)'/>
       {/* Header */}
       <View style = {{flex : 1 , flexDirection : 'row',marginTop : 20}}>
             <View style = {{flexDirection : 'column' , width : 150,alignItems : 'flex-start'}}>
@@ -28,17 +29,31 @@ const App = () => {
       </View>
       {/* Body */}
       <View style = {{flex : 4 , width : '100%'}}>
-      <View
-                  style={{
-                    borderBottomColor: '#rgb(0,131,200)',
-                    borderBottomWidth: 12,
-                    position : 'absolute',
-                  }}
-                />
+      
           <View style = {{alignSelf : 'center'}}>
-              <BallIcon />
-          </View>
-           <Text style = {{color : 'white' , fontSize : 18,width : 150,textAlign : 'center',alignSelf : 'center'}}>Nice work! Keep it up!</Text>
+              <View style = {{flexDirection : 'row' ,
+                                          position : 'absolute',
+                                          alignSelf : 'flex-end',
+                                          marginLeft : 80,
+                                          marginTop : 32,
+                                          left : 0 ,  }}>
+                                            <View
+                                                      style={{
+                                                        borderBottomColor: '#rgb(0,131,200)',  
+                                                        width : 70,
+                                                        borderBottomWidth: StyleSheet.hairlineWidth,
+                                                      }}
+                                                    />
+                              <Text style = {{color : 'white' , top : 10,fontSize : 16}}> 3.5 L</Text>
+                              <TouchableOpacity style = {{top : 13}}>
+                                    <Image style = {{left  : 6 ,height : 15 , width : 15}} source = {require('./src/utils/pen.png')} />
+                              </TouchableOpacity>
+              </View>
+        
+      
+                  <BallIcon />
+              </View>
+           <Text style = {{color : 'white' , fontSize : 18,width : 150,textAlign : 'center',alignSelf : 'center',fontWeight : '600'}}>Nice work! Keep it up!</Text>
 
            <View style = {{flexDirection : 'row' , justifyContent : 'space-around' , backgroundColor : 'transparent' ,marginTop : 30}}>
                 <Text style = {{color : '#87CEFA' , fontSize : 22,fontWeight : '800'}}>150 ml</Text>
