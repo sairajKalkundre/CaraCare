@@ -1,7 +1,8 @@
 import React from "react";
 import Svg,{LinearGradient,Stop,Defs,Ellipse, G, Path} from "react-native-svg";
 
-export const BallIcon = () =>{
+export const Waterbody = ({dehydrated}) =>{
+  console.log(dehydrated);
     return (
         <Svg
         xmlns="http://www.w3.org/2000/svg"
@@ -11,11 +12,11 @@ export const BallIcon = () =>{
         viewBox="0 0 1000 2000"
       >
         <Defs>
-        <LinearGradient id="grad" x1="0%" y1="0%" x2="0%" y2="100%">
-                <Stop offset="0%" stopColor="rgb(69,188,237)" stopOpacity="1" />
-                <Stop offset="20%" stopColor="rgb(69,188,237)" stopOpacity="1" />
-                <Stop offset="20%" stopColor="rgb(0,140,205)" stopOpacity="1" />
-                <Stop offset="100%" stopColor="rgb(0,140,205)" stopOpacity="1" />
+        <LinearGradient id="grad" x1="0%" y1="100%" x2="0%" y2="0%">
+                <Stop offset="0%" stopColor="rgb(0,140,205)" stopOpacity="1" />
+                <Stop offset= {dehydrated} stopColor="rgb(0,140,205)" stopOpacity="1" />
+                <Stop offset= {dehydrated} stopColor="rgb(69,188,237)" stopOpacity="1" />
+                <Stop offset="100%" stopColor="rgb(69,188,237)" stopOpacity="1" />
           </LinearGradient>
           </Defs>
         <G transform="translate(41.5 630.923)">

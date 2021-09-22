@@ -7,11 +7,45 @@
  *
  * @format
  */
-import React from "react";
-import { Image, StatusBar, StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import {BallIcon,AddIcon} from './src/utils/icon';
+import React, { useState } from "react";
+import { FlatList, Image, ScrollView, StatusBar, StyleSheet, Text, Touchable, TouchableOpacity, View } from "react-native";
+import {Waterbody,AddIcon} from './src/utils/icon';
 
 const App = () => {
+  const [dehydrationcount , setDehydrationCount] = useState(0);
+  const [waterDrunk , setWaterDrunk] = useState(2400);
+  const [selectedItem , setSelectedItem] = useState();
+  let achievedTarget = 3500;
+
+  const arrData = [{id : 150 , value : '150ml'},{id : 250 , value : '250ml'},{id : 350 , value : '350ml'},{id : 450 , value : '450ml'},{id : 550 , value : '550ml'},{id : 650 , value : '650ml'}]
+
+ const increaseHydration = () => {
+      let totalWaterDrunk = selectedItem + waterDrunk ;
+      setWaterDrunk(totalWaterDrunk);
+      let percentage = (totalWaterDrunk * 100) / achievedTarget;
+      setDehydrationCount(percentage);
+  }
+
+  const decreaseHydration = () => {
+    let totalWaterDrunk = waterDrunk - selectedItem  ;
+    setWaterDrunk(totalWaterDrunk);
+    let percentage = (totalWaterDrunk * 100) / achievedTarget;
+    setDehydrationCount(percentage);
+  }
+
+  const waterSelection = ({id,value}) => {
+    setSelectedItem(id);
+  }
+
+  const horizontalList = ({item}) => {
+      return(
+        <TouchableOpacity onPress = {() => waterSelection(item)}>
+              <Text style = {{color :  selectedItem !== item.id ? '#87CEFA'  : 'white', fontSize : 22,fontWeight : '800',marginLeft :20 }}>{item.value}</Text>
+        </TouchableOpacity>
+
+      )
+  }
+
   return (
     <View style = {{flex : 1  , backgroundColor : 'rgb(69,188,237)',alignItems : 'center',justifyContent : 'center'}}>
       <StatusBar backgroundColor = 'rgb(69,188,237)'/>
@@ -35,7 +69,7 @@ const App = () => {
                                           position : 'absolute',
                                           alignSelf : 'flex-end',
                                           marginLeft : 80,
-                                          marginTop : 32,
+                                          marginTop : 30,
                                           left : 0 ,  }}>
                                             <View
                                                       style={{
@@ -49,25 +83,31 @@ const App = () => {
                                     <Image style = {{left  : 6 ,height : 15 , width : 15}} source = {require('./src/utils/pen.png')} />
                               </TouchableOpacity>
               </View>
-        
-      
-                  <BallIcon />
+                  <Waterbody dehydrated = {dehydrationcount.toString() + '%'}/>
               </View>
            <Text style = {{color : 'white' , fontSize : 18,width : 150,textAlign : 'center',alignSelf : 'center',fontWeight : '600'}}>Nice work! Keep it up!</Text>
 
-           <View style = {{flexDirection : 'row' , justifyContent : 'space-around' , backgroundColor : 'transparent' ,marginTop : 30}}>
-                <Text style = {{color : '#87CEFA' , fontSize : 22,fontWeight : '800'}}>150 ml</Text>
-                <Text style = {{color : 'white' , fontSize : 22,fontWeight : '800'}}>250 ml</Text>
-                <Text style = {{color : '#87CEFA' , fontSize : 22,fontWeight : '800'}}>350 ml</Text>
-           </View>
+           {/* <View style = {{flexDirection : 'row' , justifyContent : 'space-around' , backgroundColor : 'transparent' ,marginTop : 30}}>
+                  <Text style = {{color : '#87CEFA' , fontSize : 22,fontWeight : '800'}}>150 ml</Text>
+                      <Text style = {{color : 'white' , fontSize : 22,fontWeight : '800'}}>250 ml</Text>
+                      <Text style = {{color : '#87CEFA' , fontSize : 22,fontWeight : '800'}}>350 ml</Text>
+           </View> */}
+          <View style = {{height : 200 ,marginTop : 20}}>
+          <FlatList
+              data={arrData}
+              horizontal = {true}
+              renderItem={horizontalList}
+            /> 
+          </View>
+     
 
         </View>
         {/* Footer */}
         <View style = {{flex : 1 , flexDirection : 'row',alignItems : 'flex-end',marginBottom : 40 }}>
-              <TouchableOpacity>
+              <TouchableOpacity  onPress = {() => decreaseHydration()}>
                     <Image style = {{height : 50 , width : 50}} source = {require('./src/utils/sub.png')} />
               </TouchableOpacity>
-              <TouchableOpacity  style = {{marginLeft : 40}}>
+              <TouchableOpacity onPress = {() => increaseHydration()} style = {{marginLeft : 40}}>
                     <Image style = {{height : 50 , width : 50}} source = {require('./src/utils/add.png')} />
               </TouchableOpacity>
         </View>
