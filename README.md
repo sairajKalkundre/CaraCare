@@ -3,6 +3,7 @@
 ## React Native and TypeScript
 
 This is a simple water tracker app.
+Hermes Enabled.
 
 ## Libraries Used
 - @react-native-svg : "^12.1.1",
