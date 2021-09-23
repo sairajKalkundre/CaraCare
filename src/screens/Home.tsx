@@ -8,7 +8,7 @@
  * @format
  */
  import React, { useEffect, useState } from "react";
- import { FlatList, Image, Modal, StatusBar, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+ import { FlatList, Image, Modal, StatusBar, StyleSheet, Text, TextInput, Touchable, TouchableOpacity, View } from "react-native";
  import AsyncStorage from '@react-native-async-storage/async-storage';
  import pen from '../assets/icon/pen.png';
 import { Waterbody } from "../assets/svg/icon";
@@ -21,8 +21,8 @@ import { Footer } from "../components/Footer";
    const [dehydrationcount , setDehydrationCount] = useState(0);
    const [waterDrunk , setWaterDrunk] = useState(0);
    const [selectedItem , setSelectedItem] = useState(0);
-   const [modal , setModal] = useState(true);
-
+   const [modal , setModalVisible] = useState(false);
+  const[inputWater , setInputWater] = useState('');
    let achievedTarget = 3500;
  
    useEffect(() => {
@@ -94,12 +94,22 @@ import { Footer } from "../components/Footer";
         value : string
    }
 
+   const updateTargetWater = async(qty : number) => {
+        if(qty !== 0){
+          try {
+            await AsyncStorage.setItem('totalWaterDrunk', qty.toString());
+            setDehydrationCount(convertToPercentage(qty , achievedTarget));
+          } catch (e) {
+            console.log(e);
+          }
+        }
+   }
+
    const horizontalList = ({item} : Waterelement) => {
        return(
          <TouchableOpacity onPress = {() => waterSelection(item)}>
                <Text style = {{color :  selectedItem !== item.id ? '#87CEFA'  : 'white', fontSize : 22,fontWeight : '800',marginLeft :20 }}>{item.value}</Text>
          </TouchableOpacity>
- 
        )
    }
  
@@ -107,7 +117,32 @@ import { Footer } from "../components/Footer";
      <View style = {{flex : 1  , backgroundColor : backgroundColor.blue,alignItems : 'center',justifyContent : 'center'}}>
        <StatusBar backgroundColor ={backgroundColor.blue}/>
        {/* Header */}
-
+            <Modal
+              animationType="slide"
+              transparent={true}
+              visible={modal}
+              onRequestClose={() => {
+                setModalVisible(!modal);
+              }}
+            >
+              <View style={styles.centeredView}>
+                <View style={styles.modalView}>
+                  <Text style={styles.modalText}>Update Target Water</Text>
+                  <Text style={styles.titleText}>Please enter your new water target below</Text>
+                  <TextInput 
+                      placeholder = 'In ml'
+                      keyboardType = "numeric"
+                      style = {styles.input}
+                      value = {inputWater}
+                      onChangeText = {setInputWater}
+                  />
+                  <TouchableOpacity style = {styles.modalUpdate} onPress = {() => updateTargetWater()}>
+                        <Text style = {{color : 'white' , fontSize : 18,fontWeight : '700' ,alignSelf : 'center'}}>UPDATE</Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+            </Modal>
+       
        <Header waterDrunk = {convertMLtoL(waterDrunk)} />
      
        {/* Body */}
@@ -127,7 +162,7 @@ import { Footer } from "../components/Footer";
                                                        }}
                                                      />
                                <Text style = {{color : 'white' , top : 10,fontSize : 16}}> 3.5 L</Text>
-                               <TouchableOpacity style = {{top : 13}}>
+                               <TouchableOpacity style = {{top : 13}} onPress = {() => setModalVisible(!modal)}>
                                      <Image style = {{left  : 6 ,height : 15 , width : 15}} source = {pen} />
                                </TouchableOpacity>
                </View>
@@ -151,5 +186,55 @@ import { Footer } from "../components/Footer";
    )
    }
  
+   const styles = StyleSheet.create({
+    centeredView: {
+      flex: 1,
+      justifyContent: "center",
+      alignItems: "center",
+      marginTop: 22
+    },
+    modalView: {
+      margin: 20,
+      backgroundColor: "white",
+      borderRadius: 20,
+      padding: 35,
+      alignItems: "center",
+      shadowColor: "#000",
+      shadowOffset: {
+        width: 0,
+        height: 2
+      },
+      shadowOpacity: 0.25,
+      shadowRadius: 4,
+      elevation: 5
+    },
+    modalText: {
+      marginBottom: 15,
+      textAlign: "center",
+      fontSize : 22,
+      fontWeight : '700',
+      color : backgroundColor.darkBlue
+    },
+    titleText : {
+      fontSize : 16,
+      color : backgroundColor.blue
+    },
+    input : {
+      marginTop : 10,
+      borderRadius : 10,
+      borderColor : '#000',
+      height : 40,
+      width : 200,
+      borderWidth : StyleSheet.hairlineWidth
+    },
+    modalUpdate : {
+      justifyContent : 'center',
+      backgroundColor : backgroundColor.blue,
+      height : 40,
+      width  : 200,
+      marginTop : 10,
+      borderRadius : 10,
+    }
+   })
  export default Home;
  
