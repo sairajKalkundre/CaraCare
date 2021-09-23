@@ -11,18 +11,19 @@
  import { FlatList, Image, Modal, StatusBar, StyleSheet, Text, TextInput, Touchable, TouchableOpacity, View } from "react-native";
  import AsyncStorage from '@react-native-async-storage/async-storage';
  import pen from '../assets/icon/pen.png';
-import { Waterbody } from "../assets/svg/icon";
-import { backgroundColor } from "../utils/color";
-import { Strings } from "../utils/strings";
-import { Header } from "../components/Header";
-import { Footer } from "../components/Footer";
+import { Waterbody } from "../../assets/svg/icon";
+import { backgroundColor } from "../../utils/color";
+import { Strings } from "../../utils/strings";
+import { Header } from "../../components/Header";
+import { Footer } from "../../components/Footer";
+import HomeStyle from "./Home.style";
 
  const Home = () => {
    const [dehydrationcount , setDehydrationCount] = useState(0);
    const [waterDrunk , setWaterDrunk] = useState(0);
    const [selectedItem , setSelectedItem] = useState(0);
    const [modal , setModalVisible] = useState(false);
-  const[inputWater , setInputWater] = useState('');
+  const[inputWater , setInputWater] = useState(0);
    let achievedTarget = 3500;
  
    useEffect(() => {
@@ -97,12 +98,13 @@ import { Footer } from "../components/Footer";
    const updateTargetWater = async(qty : number) => {
         if(qty !== 0){
           try {
+            setDehydrationCount(convertToPercentage(dehydrationcount, achievedTarget));
             await AsyncStorage.setItem('totalWaterDrunk', qty.toString());
-            setDehydrationCount(convertToPercentage(qty , achievedTarget));
           } catch (e) {
             console.log(e);
           }
         }
+       setModalVisible(!modal);
    }
 
    const horizontalList = ({item} : Waterelement) => {
@@ -114,7 +116,7 @@ import { Footer } from "../components/Footer";
    }
  
    return (
-     <View style = {{flex : 1  , backgroundColor : backgroundColor.blue,alignItems : 'center',justifyContent : 'center'}}>
+     <View style = {HomeStyle.homeContainer}>
        <StatusBar backgroundColor ={backgroundColor.blue}/>
        {/* Header */}
             <Modal
@@ -127,17 +129,16 @@ import { Footer } from "../components/Footer";
             >
               <View style={styles.centeredView}>
                 <View style={styles.modalView}>
-                  <Text style={styles.modalText}>Update Target Water</Text>
-                  <Text style={styles.titleText}>Please enter your new water target below</Text>
+                  <Text style={styles.modalText}>{Strings.modalTitle}</Text>
+                  <Text style={styles.titleText}>{Strings.modalBody}</Text> 
                   <TextInput 
                       placeholder = 'In ml'
                       keyboardType = "numeric"
                       style = {styles.input}
-                      value = {inputWater}
-                      onChangeText = {setInputWater}
+                      onChangeText = {(text) => setInputWater(Number(text))}
                   />
-                  <TouchableOpacity style = {styles.modalUpdate} onPress = {() => updateTargetWater()}>
-                        <Text style = {{color : 'white' , fontSize : 18,fontWeight : '700' ,alignSelf : 'center'}}>UPDATE</Text>
+                  <TouchableOpacity style = {styles.modalUpdate} onPress = {() => updateTargetWater(inputWater)}>
+                        <Text style = {{color : 'white' , fontSize : 18,fontWeight : '700' ,alignSelf : 'center'}}>{Strings.modalBtn}</Text>
                   </TouchableOpacity>
                 </View>
               </View>
