@@ -3,8 +3,6 @@ import { backgroundColor } from "../../utils/color";
 
 interface Style {
   homeContainer : ViewStyle,
-  imageStyle : ImageStyle,
-  addStyle : ViewStyle
 }
 
 export default StyleSheet.create<Style>({
@@ -13,12 +11,6 @@ export default StyleSheet.create<Style>({
          backgroundColor : backgroundColor.blue,
          alignItems :  'center',
          justifyContent : 'center'
-    },
-    imageStyle : {
-        height : 50 , 
-        width : 50
-    },
-    addStyle : {
-        marginLeft : 40
     }
-})
+}
+);

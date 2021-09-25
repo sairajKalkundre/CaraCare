@@ -7,15 +7,16 @@
  *
  * @format
  */
- import React, { useEffect, useState } from "react";
- import { FlatList, Image, Modal, StatusBar, StyleSheet, Text, TextInput, Touchable, TouchableOpacity, View } from "react-native";
  import AsyncStorage from '@react-native-async-storage/async-storage';
- import pen from '../assets/icon/pen.png';
+import React, { useEffect, useState } from "react";
+import { FlatList, StatusBar, Text, TouchableOpacity, View } from "react-native";
 import { Waterbody } from "../../assets/svg/icon";
+import { Footer } from "../../components/Footer";
+import { Header } from "../../components/Header";
+import { Custommodal } from "../../components/Modal/Custommodal";
+import { PenTitle } from "../../components/Pen";
 import { backgroundColor } from "../../utils/color";
 import { Strings } from "../../utils/strings";
-import { Header } from "../../components/Header";
-import { Footer } from "../../components/Footer";
 import HomeStyle from "./Home.style";
 
  const Home = () => {
@@ -118,124 +119,36 @@ import HomeStyle from "./Home.style";
    return (
      <View style = {HomeStyle.homeContainer}>
        <StatusBar backgroundColor ={backgroundColor.blue}/>
+
+       {/* Modal */}
+       <Custommodal modal = {modal} setInputWater = {(text : number) => setInputWater(text)} updateTargetWater = {() => updateTargetWater(inputWater)} inputWater = {inputWater}/>
+     
        {/* Header */}
-            <Modal
-              animationType="slide"
-              transparent={true}
-              visible={modal}
-              onRequestClose={() => {
-                setModalVisible(!modal);
-              }}
-            >
-              <View style={styles.centeredView}>
-                <View style={styles.modalView}>
-                  <Text style={styles.modalText}>{Strings.modalTitle}</Text>
-                  <Text style={styles.titleText}>{Strings.modalBody}</Text> 
-                  <TextInput 
-                      placeholder = 'In ml'
-                      keyboardType = "numeric"
-                      style = {styles.input}
-                      onChangeText = {(text) => setInputWater(Number(text))}
-                  />
-                  <TouchableOpacity style = {styles.modalUpdate} onPress = {() => updateTargetWater(inputWater)}>
-                        <Text style = {{color : 'white' , fontSize : 18,fontWeight : '700' ,alignSelf : 'center'}}>{Strings.modalBtn}</Text>
-                  </TouchableOpacity>
-                </View>
-              </View>
-            </Modal>
-       
+
        <Header waterDrunk = {convertMLtoL(waterDrunk)} />
      
        {/* Body */}
-       <View style = {{flex : 4 , width : '100%'}}>
-           <View style = {{alignSelf : 'center'}}>
-               <View style = {{flexDirection : 'row' ,
-                                           position : 'absolute',
-                                           alignSelf : 'flex-end',
-                                           marginLeft : 80,
-                                           marginTop : 30,
-                                           left : 0 ,  }}>
-                                             <View
-                                                       style={{
-                                                         borderBottomColor: '#rgb(0,131,200)',  
-                                                         width : 70,
-                                                         borderBottomWidth: StyleSheet.hairlineWidth,
-                                                       }}
-                                                     />
-                               <Text style = {{color : 'white' , top : 10,fontSize : 16}}> 3.5 L</Text>
-                               <TouchableOpacity style = {{top : 13}} onPress = {() => setModalVisible(!modal)}>
-                                     <Image style = {{left  : 6 ,height : 15 , width : 15}} source = {pen} />
-                               </TouchableOpacity>
-               </View>
-                   <Waterbody dehydrated = {dehydrationcount.toString() + '%'}/>
-               </View>
-            <Text style = {{color : 'white' , fontSize : 18,width : 150,textAlign : 'center',alignSelf : 'center',fontWeight : '600'}}>{Strings.quote}</Text>
-           <View style = {{height : 200 ,marginTop : 20}}>
-           <FlatList
-               data={arrData}
-               horizontal = {true}
-               renderItem={horizontalList}
-             /> 
-           </View>
-      
- 
+       <View style = {{flex : 5 , width : '100%'}}>
+                <View style = {{alignSelf : 'center'}}>
+                          <PenTitle setModalVisible = {() => setModalVisible(!modal)} modal = {modal}/>
+                        <Waterbody dehydrated = {dehydrationcount.toString() + '%'}/>
+                  </View>
+                  <Text style = {{color : 'white' , fontSize : 18,width : 150,textAlign : 'center',alignSelf : 'center',fontWeight : '600'}}>{Strings.quote}</Text>
+                <View style = {{height : 200 ,marginTop : 20}}>
+                    <FlatList
+                        data={arrData}
+                        horizontal = {true}
+                        renderItem={horizontalList}
+                      /> 
+                </View>
          </View>
+
          {/* Footer */}
          <Footer decreaseHydration ={() => decreaseHydration()} increaseHydration= {() => increaseHydration()}/>
-      
      </View>
    )
    }
  
-   const styles = StyleSheet.create({
-    centeredView: {
-      flex: 1,
-      justifyContent: "center",
-      alignItems: "center",
-      marginTop: 22
-    },
-    modalView: {
-      margin: 20,
-      backgroundColor: "white",
-      borderRadius: 20,
-      padding: 35,
-      alignItems: "center",
-      shadowColor: "#000",
-      shadowOffset: {
-        width: 0,
-        height: 2
-      },
-      shadowOpacity: 0.25,
-      shadowRadius: 4,
-      elevation: 5
-    },
-    modalText: {
-      marginBottom: 15,
-      textAlign: "center",
-      fontSize : 22,
-      fontWeight : '700',
-      color : backgroundColor.darkBlue
-    },
-    titleText : {
-      fontSize : 16,
-      color : backgroundColor.blue
-    },
-    input : {
-      marginTop : 10,
-      borderRadius : 10,
-      borderColor : '#000',
-      height : 40,
-      width : 200,
-      borderWidth : StyleSheet.hairlineWidth
-    },
-    modalUpdate : {
-      justifyContent : 'center',
-      backgroundColor : backgroundColor.blue,
-      height : 40,
-      width  : 200,
-      marginTop : 10,
-      borderRadius : 10,
-    }
-   })
+
  export default Home;
  

@@ -11,13 +11,13 @@ export function Header({waterDrunk}: WaterDrunkProps) : React.ReactElement{
     return(
         <View style = {styles.headerContainer}>
                 <View style = {styles.totalWaterContainer}>
-                    <Text style = {styles.titleTextStyle}>{waterDrunk + 'L'} </Text>
-                    <Text style = {styles.textStyle}>{Strings.totalWaterDrunk}</Text>
+                    <Text style = {styles.titleTextStyle}>{waterDrunk + ' L'} </Text>
+                    <Text style = {styles.totalTextStyle}>{Strings.totalWaterDrunk}</Text>
                 </View>
                 
                 <View style = {styles.achievedWaterContainer}>
                     <Text style = {styles.titleAchievedText}>15</Text>
-                    <Text style = {styles.textStyle}>{Strings.achieveGoalDays}</Text>
+                    <Text style = {styles.achievedTextStyle}>{Strings.achieveGoalDays}</Text>
                 </View>
         </View>
     );

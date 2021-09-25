@@ -4,42 +4,54 @@ interface Style {
     headerContainer : ViewStyle;
     totalWaterContainer : ViewStyle;
     achievedWaterContainer : ViewStyle;
-    textStyle : TextStyle;
     titleTextStyle : TextStyle;
-    titleAchievedText : TextStyle
+    titleAchievedText : TextStyle;
+    totalTextStyle : TextStyle;
+    achievedTextStyle : TextStyle
 }
 
 export default StyleSheet.create<Style>({
     headerContainer : {
         flex : 1 , 
-        flexDirection : 'row'
-        ,marginTop : 20
+        width : '100%',
+        justifyContent : 'space-between',
+        flexDirection : 'row',
+        marginTop : 20,
     },
     totalWaterContainer : {
         flexDirection : 'column' , 
-        width : 150,
+        marginLeft : 20,
+        // backgroundColor : 'white',
         alignItems : 'flex-start'
     },
     achievedWaterContainer : {
         flexDirection : 'column' , 
-        width : 150,
+        // backgroundColor : 'white',
+        marginRight : 20,
         alignItems : 'flex-end'
     },
     titleTextStyle : {
-        fontSize : 30 , 
+        fontSize : 34 , 
         color : 'white',
         fontWeight : '800',
         textAlign : 'center'
     },
     titleAchievedText : {
-        fontSize : 30 , 
+        fontSize : 34 , 
         color : 'white',
         fontWeight : '800',
         alignSelf : 'center'
     },
-    textStyle : {
+    totalTextStyle : {
         fontSize : 16 , 
         color : '#F0F8FF',
+        width : '65%',
+        textAlign : 'center'
+    },
+    achievedTextStyle : {
+        fontSize : 16 , 
+        color : '#F0F8FF',
+        width : 150,
         textAlign : 'center',
     },
 })
