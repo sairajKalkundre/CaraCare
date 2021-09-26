@@ -7,18 +7,23 @@ interface CustommodalProps {
     modal : boolean,
     setInputWater :  setInputWater,
     updateTargetWater :  updateTargetWater,
-    inputWater : number
+    inputWater : number,
+    setModalVisible : setModalVisible
 }
 
 type updateTargetWater = (inputWater : number) => void ;
 type setInputWater = (inputWater : number) => void ;
+type setModalVisible = (modal : boolean) => void ;
 
-export function Custommodal({modal,setInputWater,updateTargetWater,inputWater} : CustommodalProps) : React.ReactElement{
+export function Custommodal({modal,setInputWater,updateTargetWater,inputWater,setModalVisible} : CustommodalProps) : React.ReactElement{
     return(
         <Modal
                 animationType="slide"
                 transparent={true}
                 visible={modal}
+                onRequestClose={() => {
+                        setModalVisible(!modal);
+                  }}
             >
                 <View style={styles.centeredView}>
                 <View style={styles.modalView}>
