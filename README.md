@@ -20,7 +20,7 @@ This app uses Redux Toolkit for state management and redux-persist with Asyncsto
 ## Screenshots
 ![1](https://github.com/sairajKalkundre/CaraCare/blob/master/screenshots/caraCare1.jpg)
 ![2](https://github.com/sairajKalkundre/CaraCare/blob/master/screenshots/caraCare2.jpg)
-![3](https://github.com/sairajKalkundre/CaraCare/blob/master/screenshots/caraCare4.jpg)
+![3](https://github.com/sairajKalkundre/CaraCare/blob/master/screenshots/caracare5.jpg)
 
 
 
