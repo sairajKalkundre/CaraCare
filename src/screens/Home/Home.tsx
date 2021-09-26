@@ -8,20 +8,20 @@
  * @format
  */
  import AsyncStorage from '@react-native-async-storage/async-storage';
-import React, { useEffect, useState} from "react";
-import { FlatList, StatusBar, Text, TouchableOpacity, View } from "react-native";
-import { useSelector , useDispatch } from 'react-redux';
+import React, { useState } from "react";
+import { FlatList, StatusBar, Text, ToastAndroid, TouchableOpacity, View } from "react-native";
+import { useDispatch, useSelector } from 'react-redux';
 import { Waterbody } from "../../assets/svg/icon";
 import { Footer } from "../../components/Footer";
 import { Header } from "../../components/Header";
 import { Custommodal } from "../../components/Modal/Custommodal";
 import { PenTitle } from "../../components/Pen";
+import { setHydration, setHydrationInPercent } from '../../redux/slices/hydrationSlice';
 import { RootState } from '../../redux/store';
 import { backgroundColor } from "../../utils/color";
+import { convertMLtoL, convertToPercentage } from '../../utils/helper';
 import { Strings } from "../../utils/strings";
 import HomeStyle from "./Home.style";
-import {setHydration , setHydrationInPercent} from '../../redux/slices/hydrationSlice';
-import {convertMLtoL , convertToPercentage} from '../../utils/helper';
 
 interface Waterelement {
       item : Item
@@ -48,38 +48,13 @@ interface WaterObjects {
 
    const dispatch = useDispatch();
 
-  //  useEffect(() => {
-  //      readData();
-  //  });
- 
    const arrData = [{id : 150 , value : '150ml'},{id : 250 , value : '250ml'},{id : 350 , value : '350ml'},{id : 450 , value : '450ml'},{id : 550 , value : '550ml'},{id : 650 , value : '650ml'}];
  
-   //Async
-   const storeData = async (value : number) => {
-     try {
-       await AsyncStorage.setItem('totalWaterDrunk', value.toString())
-     } catch (e) {
-       console.log(e);
-     }
-   }
- 
-  //  const readData = async () => {
-  //    try {
-  //      const waterCount = await AsyncStorage.getItem("totalWaterDrunk")
-  //      if (waterCount !== null) {
-  //        setWaterDrunk(Number(waterCount));
-  //        setDehydrationCount(convertToPercentage(Number(waterDrunk ), achievedTarget));
-  //      }
-  //    } catch (e) {
-  //      console.log('Failed to fetch the data from storage');
-  //    }
-  //  }
- 
+
     const increaseHydration = () => {
         let totalWaterDrunk = selectedItem + storeWaterDrunk ;
         if(totalWaterDrunk <= 3500){
               allDispatch(totalWaterDrunk);
-              storeData(totalWaterDrunk);
         }
   }
 
@@ -87,19 +62,18 @@ interface WaterObjects {
     let totalWaterDrunk = storeWaterDrunk - selectedItem  ;
       if(totalWaterDrunk >= 0){
             allDispatch(totalWaterDrunk);
-            storeData(totalWaterDrunk);
       }
 }
 
 const updateTargetWater = async(qty : number) => {
-      if(qty !== 0){
+      if(qty !== 0 && qty <= 3500){
         try {
-          dispatch(setHydration(qty));
-          dispatch(setHydrationInPercent(convertToPercentage(qty, achievedTarget)))
-          await AsyncStorage.setItem('totalWaterDrunk', qty.toString());
+              allDispatch(qty)
         } catch (e) {
           console.log(e);
         }
+      }else{
+        ToastAndroid.show("Value should be in between of 0 and 3500ml", ToastAndroid.SHORT);
       }
     setModalVisible(!modal);
     }

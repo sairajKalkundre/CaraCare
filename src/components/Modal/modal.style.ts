@@ -49,6 +49,7 @@ export default StyleSheet.create<Style>({
         borderColor : '#000',
         height : 40,
         width : 200,
+        color : 'black',
         borderWidth : StyleSheet.hairlineWidth
       },
       modalUpdate : {
