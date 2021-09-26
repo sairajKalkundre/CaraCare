@@ -19,8 +19,9 @@ export default StyleSheet.create<Style>({
       },
       modalView: {
         margin: 20,
+        width : '80%',
         backgroundColor: "white",
-        borderRadius: 20,
+        borderRadius: 10,
         padding: 35,
         alignItems: "center",
         shadowColor: "#000",
@@ -41,16 +42,18 @@ export default StyleSheet.create<Style>({
         },
         titleText : {
         fontSize : 16,
+        width : 200,
+        textAlign : 'center',
         color : backgroundColor.blue
       },
       input : {
         marginTop : 10,
         borderRadius : 10,
-        borderColor : '#000',
+        borderColor : backgroundColor.darkBlue,
         height : 40,
         width : 200,
         color : 'black',
-        borderWidth : StyleSheet.hairlineWidth
+        borderWidth : 1
       },
       modalUpdate : {
         justifyContent : 'center',
