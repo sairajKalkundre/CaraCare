@@ -1,5 +1,6 @@
 import React from "react";
 import { Modal, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { backgroundColor } from "../../utils/color";
 import { Strings } from "../../utils/strings";
 import styles from './modal.style';
 
@@ -30,6 +31,7 @@ export function Custommodal({modal,setInputWater,updateTargetWater,inputWater,se
                     <Text style={styles.modalText}>{Strings.modalTitle}</Text>
                     <Text style={styles.titleText}>{Strings.modalBody}</Text> 
                     <TextInput 
+                        placeholderTextColor = {backgroundColor.blue}
                         placeholder = 'In ml'
                         keyboardType = "numeric"
                         style = {styles.input}
